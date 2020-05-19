@@ -8,7 +8,7 @@ class EmpleadosM extends ConexionBD{
 	static public function RegistrarEmpleadosM($datosC,$tablaBD)
 	{
 		$pdo = ConexionBD::cBD()->prepare("INSERT INTO $tablaBD(nombre,apellido, email,puesto,salario) VALUES(:nombre,:apellido,:email,:puesto,:salario)");
-k
+
 
 		$pdo ->bindParam(":nombre", $datosC["nombre"],PDO::PARAM_STR);
 		$pdo ->bindParam(":apellido", $datosC["apellido"],PDO::PARAM_STR);
@@ -27,8 +27,31 @@ k
 
 	}
 	//Mostrar empleados
-	static public function MostrarEmpleadosM($tablaBD){
+	static public function MostrarEmpleadoM($tablaBD){
+
+		$pdo = ConexionBD::cBD()->prepare("SELECT id,nombre, apellido, email, puesto, salario FROM $tablaBD");
 		
+
+		$pdo->execute();
+
+		return $pdo->fetchAll();
+
+		$pdo ->close();
+	}
+
+	//Editar empleado
+	static public function EditarEmpleadoM($datosC, $tablaBD){
+
+		$pdo = ConexionBD::cBD()->prepare("SELECT id, nombre, apellido, email, puesto, salario FROM $tablaBD WHERE id = :id");
+
+		$pdo ->bindParam(":id", $datosC, PDO::PARAM_INT);
+
+		$pdo ->execute();
+
+		return $pdo ->fetch();
+
+		$pdo ->close();
+
 	}
 }
 
