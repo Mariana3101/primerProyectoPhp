@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 class EmpleadosC
 {
@@ -40,7 +42,7 @@ class EmpleadosC
 				
 				<td><a href="index.php?ruta=editar&id='.$value["id"].'"><button>Editar</button></a></td>
 
-				<td><button>Borrar</button></td>
+				<td><a href="index.php?ruta=empleados&idB='.$value["id"].'"><button>Borrar</button></a></td>
 			</tr>';
 			
 
@@ -54,6 +56,7 @@ class EmpleadosC
 		$datosC = $_GET["id"];
 
 		$tablaBD = "empleados";
+
 
 		$respuesta = EmpleadosM::EditarEmpleadoM($datosC, $tablaBD);
 
@@ -72,6 +75,56 @@ class EmpleadosC
 
 			<input type="submit" value="Actualizar">';
 
+
+
+	}
+
+
+
+	//Actualizar empleado"
+	public function ActualizarEmpleadoC(){
+		
+
+		if(isset($_POST["nombreE"])){
+
+			$datosC = array("id"=>$_POST["idE"],"nombre"=>$_POST["nombreE"],"apellido"=>$_POST["apellidoE"],"email"=>$_POST["emailE"],"puesto"=>$_POST["puestoE"],"salario"=>$_POST["salarioE"]);
+
+			$tablaBD ="empleados";
+
+			$respuesta = EmpleadosM::ActualizarEmpleadoM($datosC, $tablaBD);
+
+			if($respuesta == "Bien"){
+				header("location:index.php?ruta=empleados");
+			}else{
+				echo "error";
+			}
+		}
+
+	}
+
+
+	// Eliminar Empleado 
+
+	public function  BorrarEmpleadoC(){
+
+		if(isset($_GET["idB"])){
+
+			$datosC = $_GET["idB"];
+
+			$tablaBD = "empleados";
+
+			$respuesta = EmpleadosM::BorrarEmpleadoM($datosC,$tablaBD);
+
+			if($respuesta == "Bien"){
+				header("location:index.php?ruta=empleados");
+
+			}else{
+				echo "error";
+			}
+
+
+
+		}
 	}
 
 

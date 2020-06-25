@@ -1,5 +1,7 @@
 <?php
 require_once "conexionBD.php";
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 class EmpleadosM extends ConexionBD{
 	
@@ -51,6 +53,50 @@ class EmpleadosM extends ConexionBD{
 		return $pdo ->fetch();
 
 		$pdo ->close();
+
+	}
+
+	//Actualizar Empleador
+	static public function ActualizarEmpleadoM($datosC, $tablaBD){
+
+		$pdo = ConexionBD::cBD()->prepare("UPDATE $tablaBD SET nombre = :nombre, apellido = :apellido,email = :email, puesto = :puesto, salario = :salario WHERE id = :id");
+
+
+
+		$pdo -> bindParam(":id", $datosC["id"], PDO::PARAM_INT);
+		$pdo -> bindParam(":nombre", $datosC["nombre"], PDO::PARAM_STR);
+		$pdo -> bindParam(":apellido", $datosC["apellido"], PDO::PARAM_STR);
+		$pdo -> bindParam(":email", $datosC["email"], PDO::PARAM_STR);
+		$pdo -> bindParam(":puesto", $datosC["puesto"], PDO::PARAM_STR);
+		$pdo -> bindParam(":salario", $datosC["salario"], PDO::PARAM_STR);
+
+		if($pdo -> execute()){
+			return "Bien";
+		}else{
+			return "Error";
+		}
+
+		$pdo ->close();
+
+	} 
+
+	// Borrar Empleado
+
+	static public function BorrarEmpleadoM($datosC,$tablaBD){
+
+		$pdo = ConexionBD::cBD()->prepare("DELETE FROM $tablaBD WHERE id = :id");
+
+		$pdo -> bindParam(":id",$datosC,PDO::PARAM_INT);
+
+		if($pdo -> execute()){
+			return "Bien";
+		}else{
+			return "Error";
+		}
+
+		$pdo ->close();
+
+
 
 	}
 }

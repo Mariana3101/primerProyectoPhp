@@ -46,4 +46,9 @@ if(!$_SESSION["Ingreso"]){
 
 	</table>
 
+<?php
 
+$elimimar = new EmpleadosC();
+$elimimar -> BorrarEmpleadoC();
+
+?>
